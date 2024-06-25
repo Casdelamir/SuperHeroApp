@@ -1,17 +1,16 @@
 package com.example.superheroapp.activites
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.superheroapp.R
 import com.example.superheroapp.adapters.SuperHeroAdapter
-import com.example.superheroapp.data.SuperheroApiService
+import com.example.superheroapp.data.SuperHero
+import com.example.superheroapp.data.SuperHeroServiceImplementation
 import com.example.superheroapp.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,36 +22,40 @@ lateinit var adapter: SuperHeroAdapter
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = SuperHeroAdapter()
+        adapter = SuperHeroAdapter() { superHero ->
+            navigateToHeroDetails(superHero)
+        }
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        searchByName("super")
-
+        SuperHeroServiceImplementation.searchByName("a", adapter, binding.noResults)
     }
 
-    private fun searchByName(query: String){
-        // Llamada en segundo plano
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val apiService = getRetrofit().create(SuperheroApiService::class.java)
-                val result = apiService.findSuperHeroesByName(query)
-                //Log.i("HTTP", "${result.results}")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
 
-                runOnUiThread {
-                    adapter.updateData(result.results)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+        val searchViewItem = menu?.findItem(R.id.menu_search)
+        val searchView = searchViewItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
-        }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return if (newText != null) {
+                        SuperHeroServiceImplementation.searchByName(newText, adapter, binding.noResults)
+                    true
+                } else false
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://superheroapi.com/api/ed1cd3aa1a195f3df2606042e3972110/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun navigateToHeroDetails(superHero: SuperHero) {
+            val intent = Intent(this, HeroDetails::class.java)
+            intent.putExtra("id", superHero.id)
+            startActivity(intent)
     }
 }
