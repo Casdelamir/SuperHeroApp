@@ -54,7 +54,7 @@ lateinit var adapter: SuperHeroAdapter
     }
 
     fun navigateToHeroDetails(superHero: SuperHero) {
-            val intent = Intent(this, HeroDetails::class.java)
+            val intent = Intent(this, HeroDetailsActivity::class.java)
             intent.putExtra("id", superHero.id)
             startActivity(intent)
     }

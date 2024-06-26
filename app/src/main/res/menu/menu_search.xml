@@ -6,8 +6,7 @@
         android:id="@+id/menu_search"
         android:title="Search"
         android:icon="@drawable/baseline_search_24"
-        app:showAsAction="always"
-        app:iconTint="@color/white"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|always"
         />
 </menu>

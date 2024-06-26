@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SuperHeroApp</string>
+    <string name="full.name">Full name: %1$d</string>
 </resources>

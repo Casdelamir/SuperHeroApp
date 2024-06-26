@@ -2,9 +2,11 @@ package com.example.superheroapp.data
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.example.superheroapp.adapters.SuperHeroAdapter
+import com.example.superheroapp.databinding.ActivityHeroDetailsBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +23,7 @@ companion object {
                 val apiService = getRetrofit().create(SuperheroApiService::class.java)
                 val result = apiService.findSuperHeroesByName(query)
                 //Log.i("HTTP", "${result.results}")
+                //
                 Handler(Looper.getMainLooper()).post {
                     //code that runs in main
                     if (result.response == "success") {
@@ -42,15 +45,19 @@ companion object {
             }*/
         }
     }
-//call labda function on the method
-suspend fun findSuperHeroById(query: String): SuperHero? {
-    return withContext(Dispatchers.IO) {
+//call lambda function on the method
+fun findSuperHeroById(query: String, doLayoutDetails: (SuperHero) -> Unit) {
+    CoroutineScope(Dispatchers.IO).launch {
         try {
             val apiService = getRetrofit().create(SuperheroApiService::class.java)
-            apiService.findSuperHeroById(query)
+            val result = apiService.findSuperHeroById(query)
+            //Log.i("HTTP", "${result.biography}")
+            Handler(Looper.getMainLooper()).post {
+                //Code that runs in main
+                doLayoutDetails(result)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
         }
     }
 }
