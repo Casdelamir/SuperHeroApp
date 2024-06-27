@@ -40,14 +40,14 @@ lateinit var adapter: SuperHeroAdapter
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                return if (query != null) {
+                    SuperHeroServiceImplementation.searchByName(query, adapter, binding.noResults)
+                    true
+                } else false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return if (newText != null) {
-                        SuperHeroServiceImplementation.searchByName(newText, adapter, binding.noResults)
-                    true
-                } else false
+                return false
             }
         })
         return super.onCreateOptionsMenu(menu)

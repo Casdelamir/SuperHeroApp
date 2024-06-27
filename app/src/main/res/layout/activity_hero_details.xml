@@ -18,7 +18,7 @@
             android:id="@+id/image_hero"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
             <TextView
                 android:id="@+id/name_hero"
                 android:layout_width="match_parent"
@@ -32,6 +32,22 @@
                 android:layout_height="wrap_content"
                 android:text="@string/full.name"
                 android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/alter_ego_hero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alter_ego"
+                android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/aliases"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/aliases"
+                android:textSize="15dp"/>
+            <com.github.mikephil.charting.charts.RadarChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
