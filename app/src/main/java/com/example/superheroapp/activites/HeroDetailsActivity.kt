@@ -75,6 +75,7 @@ class HeroDetailsActivity : AppCompatActivity() {
                 binding.chart.description.isEnabled = false
                 binding.chart.webLineWidth = 1f
                 binding.chart.webLineWidthInner = 1f
+                binding.chart.animateXY(1400, 1400)
 
                 val radarData = RadarData(dataSet)
                 binding.chart.data = radarData
