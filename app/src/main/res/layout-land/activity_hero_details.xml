@@ -14,30 +14,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/image_hero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+                <TextView
+                    android:id="@+id/name_hero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"/>
-                    <TextView
-                        android:id="@+id/name_hero"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:gravity="center"
-                        android:layout_gravity="bottom"
-                        android:background="@color/card_title_background"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"/>
+                    android:text="Name"
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:background="@color/card_title_background"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
             </FrameLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp">

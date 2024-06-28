@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.superheroapp.R
 import com.example.superheroapp.data.SuperHeroServiceImplementation
 import com.example.superheroapp.databinding.ActivityHeroDetailsBinding
-import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
@@ -20,6 +19,12 @@ class HeroDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         superHeroId = intent.getStringExtra("id").toString()
 
+        //To turn the card and display other data on click use animate function and turn
+        //the cart to 90 degrees and then turn it back to the same face but with different data visible
+        //
+        //To create another layout for the landscape click on the
+
+        supportActionBar?.hide()
         binding = ActivityHeroDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -66,6 +71,7 @@ class HeroDetailsActivity : AppCompatActivity() {
 
                 // Customizing the Y axis
                 val yAxis = binding.chart.yAxis
+                yAxis.isEnabled = false
                 yAxis.axisMaximum = 100f
                 yAxis.axisMinimum = 0f
                 yAxis.setLabelCount(6, true)
@@ -82,8 +88,6 @@ class HeroDetailsActivity : AppCompatActivity() {
                 //Remove bottom legend of labels
                 binding.chart.legend.isEnabled = false
                 binding.chart.invalidate() // refresh
-
-
             }
     }
 }

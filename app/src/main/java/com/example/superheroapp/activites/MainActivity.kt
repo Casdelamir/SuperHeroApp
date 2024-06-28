@@ -1,6 +1,7 @@
 package com.example.superheroapp.activites
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -27,7 +28,11 @@ lateinit var adapter: SuperHeroAdapter
         }
 
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 4)
+        }
 
         SuperHeroServiceImplementation.searchByName("a", adapter, binding.noResults)
     }
@@ -57,5 +62,17 @@ lateinit var adapter: SuperHeroAdapter
             val intent = Intent(this, HeroDetailsActivity::class.java)
             intent.putExtra("id", superHero.id)
             startActivity(intent)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Load landscape layout
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 4)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Load portrait layout
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        }
     }
 }
